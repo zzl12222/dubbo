@@ -50,6 +50,10 @@ public interface LoadbalanceRules {
      *  adaptive load balance.
      **/
     String ADAPTIVE = "adaptive";
+    /**
+     * p2c load balance
+     */
+    String P2C = "p2c";
 
     String EMPTY = "";
 }

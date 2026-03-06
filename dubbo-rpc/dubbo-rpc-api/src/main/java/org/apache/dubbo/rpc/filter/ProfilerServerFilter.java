@@ -70,6 +70,7 @@ public class ProfilerServerFilter implements Filter, BaseFilter.Listener {
     public void onResponse(Result appResponse, Invoker<?> invoker, Invocation invocation) {
         afterInvoke(invoker, invocation);
         addAdaptiveResponse(appResponse, invocation);
+        addP2cResponse(appResponse, invocation);
     }
 
     @Override
@@ -103,6 +104,23 @@ public class ProfilerServerFilter implements Filter, BaseFilter.Listener {
                             / operatingSystemMXBean.getAvailableProcessors());
 
             appResponse.setAttachment(Constants.ADAPTIVE_LOADBALANCE_ATTACHMENT_KEY, sb.toString());
+        }
+    }
+
+    private void addP2cResponse(Result appResponse, Invocation invocation) {
+        String adaptiveLoadAttachment = invocation.getAttachment(Constants.P2C_LOADBALANCE_ATTACHMENT_KEY);
+        if (StringUtils.isNotEmpty(adaptiveLoadAttachment)) {
+            OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+
+            StringBuilder sb = new StringBuilder(64);
+            sb.append("curTime:").append(System.currentTimeMillis());
+            sb.append(COMMA_SEPARATOR)
+                    .append("load:")
+                    .append(operatingSystemMXBean.getSystemLoadAverage()
+                            * 100
+                            / operatingSystemMXBean.getAvailableProcessors());
+
+            appResponse.setAttachment(Constants.P2C_LOADBALANCE_ATTACHMENT_KEY, sb.toString());
         }
     }
 

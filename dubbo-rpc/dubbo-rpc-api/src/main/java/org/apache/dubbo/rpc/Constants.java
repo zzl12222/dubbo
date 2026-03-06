@@ -123,5 +123,7 @@ public interface Constants {
     String H3_SETTINGS_HTTP3_NEGOTIATION = "dubbo.protocol.triple.http3.negotiation";
 
     String ADAPTIVE_LOADBALANCE_ATTACHMENT_KEY = "lb_adaptive";
+    String P2C_LOADBALANCE_ATTACHMENT_KEY = "lb_p2c";
     String ADAPTIVE_LOADBALANCE_START_TIME = "adaptive_startTime";
+    String P2C_LOADBALANCE_START_TIME = "p2c_startTime";
 }
